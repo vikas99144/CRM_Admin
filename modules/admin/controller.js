@@ -1,5 +1,5 @@
 'use strict'
-const userModel = require('../model/index');
+const userModel = require('./model');
 const auth = require('../../auth/auth');
 
 exports.userRegister = async (data) => {

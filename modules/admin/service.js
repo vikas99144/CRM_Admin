@@ -1,6 +1,6 @@
 'use strict'
 
-const controller = require('../controller/index');
+const controller = require('./controller');
 
 const signup = async(request,h)=>{
     try{

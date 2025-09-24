@@ -1,14 +1,11 @@
 
 'use strict'
 
-const dbConfig = require('../config/development.json');
+const dbConfig = require('../config/dev.json');
 global.mongoose = require('mongoose');
 
 module.exports.configure = ()=>{
-    mongoose.connect(dbConfig.dbServer.url,{
-        useUnifiedTopology: true,
-        useNewUrlParser: true  
-    });
+    mongoose.connect(dbConfig.dbServer.url);
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error'));
     db.once('open', function callback() {
@@ -21,8 +18,6 @@ module.exports.configure = ()=>{
           process.exit(0);
         });
       });
-
-
       return db;
 }
 

@@ -1,24 +1,24 @@
 'use strict'
 
-const service = require('../service/index');
-const specs = require('../specs/index');
+const service = require('./service');
+const specs = require('./specs');
 
 module.exports = [
     {
         method: 'POST',
-        path:'/api/v1/users/signup',
+        path:'/api/v1/admin/signup',
         options: specs.signup,
         handler: service.signup
     },
     {
         method: 'POST',
-        path:'/api/v1/users/login',
+        path:'/api/v1/admin/login',
         options: specs.login,
         handler: service.login
     },
     {
         method: 'POST',
-        path:'/api/v1/users/list',
+        path:'/api/v1/admin/list',
         options: specs.list,
         handler: service.list
     }

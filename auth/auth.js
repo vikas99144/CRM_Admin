@@ -2,7 +2,7 @@
 
 
 const jwt = require('jsonwebtoken');
-const config = require('../config/development.json').token;
+const config = require('../config/dev.json').token;
 
 const createToken = (id) => {
     const token = jwt.sign({
