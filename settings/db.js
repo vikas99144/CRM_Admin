@@ -18,7 +18,7 @@ module.exports.configure = ()=>{
           process.exit(0);
         });
       });
-      return db;
+  return db;
 }
 
 

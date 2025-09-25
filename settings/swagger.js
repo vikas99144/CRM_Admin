@@ -20,7 +20,7 @@ module.exports.configure = async (server) => {
                   // 'x-keyPrefix': 'Bearer '
                 }
               },
-              security: [{ jwt: [] }], // THIS WAS THE KEY. Without this, the Authorization headers are never sent, but with them they are!
+              security: [{ jwt: [] }], 
             
         };
     await server.register([
