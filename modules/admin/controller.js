@@ -1,14 +1,16 @@
 'use strict'
 const userModel = require('./model');
-const DB = require("../../settings/db").configure();
+const mongoose = require("mongoose");
 const auth = require('../../auth/auth');
 
-exports.userRegister = async (data) => {
+
+exports.add = async (data) => {
     return new Promise(async(resolve, reject) => {
         try {
-           
 
-            let result = await DB.models("users").findOne();
+            console.log("000")
+           
+            let result = await mongoose.models.users.findOne().exec();
  console.log("=D=====",result);
             let query = { email: data.email };
             userModel.findOneAndUpdate(query, data, { upsert: true, new: true }, (err, resdata) => {

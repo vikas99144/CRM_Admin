@@ -12,7 +12,7 @@ let server;
 
 const configurations = async(server) => {
     await require('./settings/prepare').configure()
-    await require('./settings/db').configure()
+    await require('./db/db').configure()
     await require('./settings/main').configure(server)
     await require('./settings/swagger').configure(server)
      init()
