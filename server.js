@@ -7,6 +7,7 @@ const numCPUs = require('os').cpus().length;
 global.response = require('./response/responses');
 global.constant  = require('./constant/constant.json');
 global.moment = require('moment');
+global.mongoose = require('mongoose');
 
 let server;
 

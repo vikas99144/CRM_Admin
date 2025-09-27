@@ -2,7 +2,7 @@
 
 const controller = require('./controller');
 
-const signup = async(request,h)=>{
+const add = async(request,h)=>{
     try{
          const result = await controller.add(request.payload);
         return response.successData(h,'INTERNAL_SERVER_ERROR',result);
@@ -11,9 +11,9 @@ const signup = async(request,h)=>{
     }
 }
 
-const login = async(request,h)=>{
+const view = async(request,h)=>{
     try{
-         const result = await controller.login(request.payload);
+         const result = await controller.view(request.payload);
         return response.successData(h,'INTERNAL_SERVER_ERROR',result);
     }catch(err){
         return response.accessDenied(h,err.message,"signup");
@@ -29,6 +29,6 @@ const list = async(request,h)=>{
     }
 }
 
-exports.signup = signup;
-exports.login = login;
+exports.add = add;
+exports.view = view;
 exports.list = list;

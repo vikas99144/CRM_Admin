@@ -4,10 +4,10 @@ const validator = require('./validator');
 const userAuth = require('../../auth/auth');
 
 module.exports = {
-    signup: {
-        description: 'Admin signUp',
-        notes: 'Admin signUp',
-         tags: ["Admin","api"],
+    add: {
+        description: 'Menu Add',
+        notes: 'Menu Add',
+         tags: ["Menu", "api"],
         plugins: {
             'hapi-swagger': {
                 responses: {
@@ -30,10 +30,10 @@ module.exports = {
 
     },
 
-    login: {
-        description: 'Admin login',
-        notes: 'Admin login',
-           tags: ["Admin","api"],
+    view: {
+        description: 'Menu view',
+        notes: 'Menu view',
+        tags: ["Menu", "api"],
         plugins: {
             'hapi-swagger': {
                 responses: {
@@ -57,9 +57,9 @@ module.exports = {
     },
 
     list: {
-        description: 'Admin list',
-        notes: 'Admin list',
-        tags: ["Admin","api"],
+        description: 'Menu list',
+        notes: 'Menu list',
+        tags: ["Menu", "api"],
         plugins: {
             'hapi-swagger': {
                 responses: {
@@ -79,9 +79,8 @@ module.exports = {
             assign: 'token'
         }],
         validate: {
-            payload: validator.list.payload,
+            payload: validator.list.params,
             failAction: response.failAction
-
         }
 
     }

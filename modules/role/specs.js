@@ -5,9 +5,9 @@ const userAuth = require('../../auth/auth');
 
 module.exports = {
     signup: {
-        description: 'Admin signUp',
-        notes: 'Admin signUp',
-         tags: ["Admin","api"],
+        description: 'User signUp',
+        notes: 'User signUp',
+        tags: ['api', 'users'],
         plugins: {
             'hapi-swagger': {
                 responses: {
@@ -31,9 +31,9 @@ module.exports = {
     },
 
     login: {
-        description: 'Admin login',
-        notes: 'Admin login',
-           tags: ["Admin","api"],
+        description: 'User login',
+        notes: 'User login',
+        tags: ['api', 'users'],
         plugins: {
             'hapi-swagger': {
                 responses: {
@@ -57,9 +57,9 @@ module.exports = {
     },
 
     list: {
-        description: 'Admin list',
-        notes: 'Admin list',
-        tags: ["Admin","api"],
+        description: 'User list',
+        notes: 'User list',
+        tags: ['api', 'users'],
         plugins: {
             'hapi-swagger': {
                 responses: {
