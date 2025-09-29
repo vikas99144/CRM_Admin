@@ -2,6 +2,7 @@
 
 const validator = require('./validator');
 const userAuth = require('../../auth/auth');
+const response = require("../../response/responses");
 
 module.exports = {
     signup: {

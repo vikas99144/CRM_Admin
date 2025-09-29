@@ -1,6 +1,6 @@
 {
-  "dbServer":
-    {
+  "key":"yyQV36lzy8k/qUr4hbXXq2bBapVGBZzUtLvshVoQDLj46Uad6PeA4Zk85eKetTbT",
+  "dbServer": {
    
         "url": "mongodb://127.0.0.1:27017/makeiteasy",
         "option":

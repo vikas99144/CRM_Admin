@@ -5,14 +5,12 @@ const Vision = require('@hapi/vision');
 const HapiSwagger = require('hapi-swagger');
 
 module.exports.configure = async (server) => {
-  console.log('settings:swagger:configure:REGISTERING HAPI - SWAGGER')
-
   const swaggerOptions = {
     info: {
-      title: 'Test API Documentation',
+      title: 'API Documentation',
       version: '/api/v1/',
     },
-    schemes: ['http', 'https'], 
+    schemes: ['http', 'https'],
     securityDefinitions: {
       'jwt': {
         'type': 'apiKey',
@@ -22,11 +20,7 @@ module.exports.configure = async (server) => {
       }
     },
     security: [{ jwt: [] }],
-    grouping: 'tags',
-    tags: [
-      { name: 'Admin', description: 'Admin related endpoints' },
-      { name: 'Menu', description: 'Menu related endpoints' }
-    ],
+    grouping: 'tags'
 
   };
   await server.register([
@@ -37,6 +31,7 @@ module.exports.configure = async (server) => {
       options: swaggerOptions
     },
   ]);
+
 
   return true;
 }

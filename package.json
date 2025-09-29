@@ -18,17 +18,19 @@
     "app-root-path": "^3.0.0",
     "async": "^3.2.0",
     "cluster": "^0.7.7",
+    "crypto-js": "^4.2.0",
     "fs": "0.0.1-security",
     "g": "^2.0.1",
     "hapi-i18n": "^3.0.1",
     "hapi-locale-i18n": "^1.0.15",
-    "hapi-swagger": "^14.1.0",
+    "hapi-swagger": "^14.5.5",
     "joi": "^17.4.0",
     "jsonwebtoken": "^9.0.2",
     "logging": "^3.3.0",
     "md5": "^2.3.0",
     "moment": "^2.29.1",
     "mongoose": "^8.18.2",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "swagger-ui-dist": "^5.29.0"
   }
 }

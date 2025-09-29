@@ -13,6 +13,7 @@ const add = async(request,h)=>{
 
 const view = async(request,h)=>{
     try{
+        console.log("====>> view =====", request.params);
          const result = await controller.view(request.payload);
         return response.successData(h,'INTERNAL_SERVER_ERROR',result);
     }catch(err){

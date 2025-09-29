@@ -2,12 +2,13 @@
 
 const validator = require('./validator');
 const userAuth = require('../../auth/auth');
+const response = require("../../response/responses");
 
 module.exports = {
-    signup: {
-        description: 'User signUp',
-        notes: 'User signUp',
-        tags: ['api', 'users'],
+    add: {
+        description: 'Role add',
+        notes: 'Role add',
+        tags: ['Role', "api"],
         plugins: {
             'hapi-swagger': {
                 responses: {
@@ -25,15 +26,13 @@ module.exports = {
         validate: {
             payload: validator.register.payload,
             failAction: response.failAction
-
         }
-
     },
 
-    login: {
-        description: 'User login',
-        notes: 'User login',
-        tags: ['api', 'users'],
+    view: {
+        description: 'Role view',
+        notes: 'Role view',
+        tags: ['Role', "api"],
         plugins: {
             'hapi-swagger': {
                 responses: {
@@ -49,17 +48,15 @@ module.exports = {
             }
         },
         validate: {
-            payload: validator.login.payload,
+            payload: validator.view.params,
             failAction: response.failAction
-
         }
-
     },
 
     list: {
-        description: 'User list',
-        notes: 'User list',
-        tags: ['api', 'users'],
+        description: 'Role list',
+        notes: 'Role list',
+        tags: ['Role', "api"],
         plugins: {
             'hapi-swagger': {
                 responses: {
@@ -81,9 +78,6 @@ module.exports = {
         validate: {
             payload: validator.list.payload,
             failAction: response.failAction
-
         }
-
     }
-
 }

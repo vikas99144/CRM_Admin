@@ -1,10 +1,10 @@
 'use strict'
-
+const mongoose = require("mongoose");
 const roleSchema = new mongoose.Schema({
     name: { type: String, required: true }, // e.g., 'SuperAdmin', 'Editor'
     slug: { type: String, required: true },
     description: { type: String },
-    permissions: [String],// e.g., ['read', 'write', 'delete', 'manageUsers']
+    permissions: [String],// e.g., ['read', 'write', 'delete']
     is_deleted: { type: Boolean, default: false },
     status: { type: String },
     created_by: { type: String },

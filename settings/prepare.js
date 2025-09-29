@@ -23,7 +23,6 @@ const assetsFolderExists = () => {
 }
 
 module.exports.configure = async()=>{
-    console.log('settings:preparation:configure')
     if (!logFolderExists()) {
         fs.mkdirSync(`${appRoot.path}/logs/`)
         return true

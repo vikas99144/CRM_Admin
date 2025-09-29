@@ -1,16 +1,16 @@
 'use strict'
 const auth = require('../../auth/auth');
+const mongoose = require("mongoose");
 
 
 exports.add = async (data) => {
     return new Promise(async(resolve, reject) => {
         try {
 
-            console.log("000")
-           
-            let result = await mongoose.models.users.findOne().exec();
- console.log("=D=====",result);
-            let query = { email: data.email };
+            console.log("000",data);
+            resolve(data);
+            // let result = await mongoose.models.users.findOne().exec();
+
         } catch (error) {
             reject(error);
         }

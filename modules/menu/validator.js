@@ -14,10 +14,9 @@ module.exports = {
 
     },
 
-    login: {
-        payload: Joi.object({ 
-            email: Joi.string().email().required().description('Email is required'),
-            password: Joi.string().required().description('Password is required') 
+    view: {
+        params: Joi.object({ 
+            id: Joi.string().required().description('Id is required'),
         })
 
     },

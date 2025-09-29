@@ -1,6 +1,6 @@
 'use strict'
 
-const service = require('./service');
+const handler = require('./handler');
 const specs = require('./specs');
 
 module.exports = [
@@ -8,18 +8,18 @@ module.exports = [
         method: 'POST',
         path:'/api/v1/admin/signup',
         options: specs.signup,
-        handler: service.signup
+        handler: handler.signup
     },
     {
         method: 'POST',
         path:'/api/v1/admin/login',
         options: specs.login,
-        handler: service.login
+        handler: handler.login
     },
     {
         method: 'POST',
         path:'/api/v1/admin/list',
         options: specs.list,
-        handler: service.list
+        handler: handler.list
     }
 ]

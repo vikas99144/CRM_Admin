@@ -1,8 +1,7 @@
 'use strict'
-const userModel = require('../model/index');
-const auth = require('../../auth/auth');
 
-exports.userRegister = async (data) => {
+
+exports.add = async (data) => {
     return new Promise((resolve, reject) => {
         try {
             let query = { email: data.email };
@@ -20,7 +19,7 @@ exports.userRegister = async (data) => {
 
 }
 
-exports.login = async (data) => {
+exports.view = async (data) => {
     return new Promise(async(resolve, reject) => {
         try {
             let query = { email: data.email };

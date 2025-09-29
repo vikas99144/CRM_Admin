@@ -1,5 +1,5 @@
 'use strict'
-
+const mongoose = require("mongoose");
 const otpSchema = new mongoose.Schema({
     otp: { type: String, required: true },
     otp_for: { type: String, enum:["email","number"], default: "number" },
