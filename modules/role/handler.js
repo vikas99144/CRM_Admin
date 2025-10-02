@@ -1,45 +1,69 @@
 'use strict'
 const Lang = require("../../locales/en.json");
+const Mongoose = require('mongoose');
+const Utils = require("../../utils");
+const Operation = require("../../operations");
 const controller = require('./controller');
+const Response = require("../../response");
 
-const add = async(request,h)=>{
-    try{
-         const result = await controller.add(request.payload);
-        return response.successData(h,Lang.DATA_SUCCESS,result);
-    }catch(err){
-        return response.accessDenied(h,err.message,"signup");
+const create = async (request, h) => {
+    try {
+        let payload = request.payload
+        payload.slug = Utils.slugify(payload.name);
+        let model = Mongoose.models.roles;
+        let query = { slug: payload.slug, is_deleted: false };
+        let isExist = await Operation.EXIST(model, query);
+        if (isExist) {
+            return Response.validation(h, Lang.ROLE_EXISTS);
+        }
+        const result = await controller.create(payload, h);
+        return Response.success(h, Lang.ROLE_CREATE_SUCCESS, result);
+    } catch (err) {
+        console.log(err)
+        return Response.internalServer(h, err.message);
     }
 }
 
-const view = async(request,h)=>{
-    try{
+const view = async (request, h) => {
+    try {
         console.log("==")
-         const result = await controller.view(request.payload);
-        return response.successData(h,Lang.DATA_SUCCESS,result);
-    }catch(err){
-        return response.accessDenied(h,err.message,"signup");
+        const result = await controller.view(request.payload);
+        return Response.success(h, Lang.DATA_SUCCESS, result);
+    } catch (err) {
+        return Response.internalServer(h, err.message);
     }
 }
 
-const list = async(request,h)=>{
-    try{
-         const result = await controller.list(request.payload);
-         return response.successData(h,Lang.DATA_SUCCESS,result);
-    }catch(err){
-        return response.accessDenied(h,err.message,"signup");
+const list = async (request, h) => {
+    try {
+        const result = await controller.list(request.query);
+        return Response.success(h, Lang.DATA_SUCCESS, result);
+    } catch (err) {
+        return Response.internalServer(h, err.message);
     }
 }
 
-const remove = async(request,h)=>{
-    try{
-         const result = await controller.remove(request.payload);
-         return response.successData(h,Lang.DATA_SUCCESS,result);
-    }catch(err){
-        return response.accessDenied(h,err.message,"signup");
+const remove = async (request, h) => {
+    try {
+        const result = await controller.remove(request.params);
+        return Response.success(h, Lang.DATA_SUCCESS, result);
+    } catch (err) {
+        return Response.internalServer(h, err.message);
     }
 }
 
-exports.add = add;
+
+const status = async (request, h) => {
+    try {
+        const result = await controller.remove(request.params);
+        return Response.success(h, Lang.DATA_SUCCESS, result);
+    } catch (err) {
+        return Response.internalServer(h, err.message);
+    }
+}
+
+exports.create = create;
 exports.view = view;
 exports.list = list;
+exports.status = status;
 exports.remove = remove;

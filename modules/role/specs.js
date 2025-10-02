@@ -2,10 +2,10 @@
 
 const validator = require('./validator');
 const userAuth = require('../../auth/auth');
-const response = require("../../response/responses");
+const response = require("../../response");
 
 module.exports = {
-    add: {
+    create: {
         description: 'Role add',
         notes: 'Role add',
         tags: ['Role', "api"],
@@ -24,7 +24,7 @@ module.exports = {
             }
         },
         validate: {
-            payload: validator.register.payload,
+            payload: validator.create.payload,
             failAction: response.failAction
         }
     },
@@ -48,7 +48,7 @@ module.exports = {
             }
         },
         validate: {
-            payload: validator.view.params,
+            params: validator.view.params,
             failAction: response.failAction
         }
     },
@@ -71,13 +71,62 @@ module.exports = {
                 }
             }
         },
-        pre: [{
-            method: userAuth.verifyToken,
-            assign: 'token'
-        }],
+        // pre: [{
+        //     method: userAuth.verifyToken,
+        //     assign: 'token'
+        // }],
         validate: {
-            payload: validator.list.payload,
+            query: validator.list.query,
             failAction: response.failAction
         }
-    }
+    },
+
+    remove: {
+        description: 'Role delete',
+        notes: 'Role delete',
+        tags: ['Role', "api"],
+        plugins: {
+            'hapi-swagger': {
+                responses: {
+                    200: {
+                        description: 'Example of response model in return to success request',
+                        schema: validator.success
+                    },
+                    320: {
+                        description: 'Example of response model in return to failure request',
+                        schema: validator.failure
+                    }
+                }
+            }
+        },
+        validate: {
+            params: validator.remove.params,
+            failAction: response.failAction
+        }
+    },
+
+    status: {
+        description: 'Role status',
+        notes: 'Role status',
+        tags: ['Role', "api"],
+        plugins: {
+            'hapi-swagger': {
+                responses: {
+                    200: {
+                        description: 'Example of response model in return to success request',
+                        schema: validator.success
+                    },
+                    320: {
+                        description: 'Example of response model in return to failure request',
+                        schema: validator.failure
+                    }
+                }
+            }
+        },
+        validate: {
+            params: validator.status.params,
+            payload: validator.status.payload,
+            failAction: response.failAction
+        }
+    },
 }

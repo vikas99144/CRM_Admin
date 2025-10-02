@@ -2,7 +2,7 @@
 
 const validator = require('./validator');
 const userAuth = require('../../auth/auth');
-const response = require("../../response/responses");
+const Response = require("../../response");
 
 module.exports = {
     add: {
@@ -25,7 +25,7 @@ module.exports = {
         },
         validate: {
             payload: validator.register.payload,
-            failAction: response.failAction
+            failAction: Response.failAction
 
         }
 
@@ -51,7 +51,7 @@ module.exports = {
         },
         validate: {
             params: validator.view.params,
-            failAction: response.failAction
+            failAction: Response.failAction
 
         }
 
@@ -81,7 +81,7 @@ module.exports = {
         }],
         validate: {
             payload: validator.list.params,
-            failAction: response.failAction
+            failAction: Response.failAction
         }
 
     }

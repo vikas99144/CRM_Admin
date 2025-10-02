@@ -2,7 +2,7 @@
 
 const md5 = require('md5')
 const crypto = require('crypto')
-const config = require('../config/development.json').token;
+const config = require('../config/dev.json').token;
 
 const getHash = (password) => {
     let hash = crypto.createHmac('sha512', config.secret) 
@@ -21,11 +21,21 @@ const compareHash = (password, hash) => {
 
 const randomToken = (value) => {
     const valueWithTimeStamp = value + Date.now()
-
     return md5(valueWithTimeStamp)
+}
+
+const slugify = (value) => {
+    console.log("==value",value);
+   return value
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/[\s-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
 }
 
 
 exports.getHash = getHash;
+exports.slugify = slugify;
 exports.compareHash = compareHash;
 exports.randomToken = randomToken;

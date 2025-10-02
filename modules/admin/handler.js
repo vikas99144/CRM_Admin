@@ -3,7 +3,7 @@
 const Lang = require("../../locales/en.json");
 const controller = require('./controller');
 const Decryption = require("../../auth/decrypt");
-const Response = require("../../response/responses")
+const Response = require("../../response")
 
 const signup = async(request,h)=>{
     try{

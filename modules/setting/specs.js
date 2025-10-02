@@ -2,7 +2,7 @@
 
 const validator = require('./validator');
 const userAuth = require('../../auth/auth');
-const response = require("../../response/responses");
+const response = require("../../response");
 
 module.exports = {
     add: {

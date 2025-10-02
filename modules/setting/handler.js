@@ -34,7 +34,7 @@ const update = async(request,h)=>{
 
 const encrytdecrypt = async(request,h)=>{
     try{
-         const result = await controller.list(request.payload);
+         const result = await controller.encrytdecrypt(request.payload);
          return response.successData(h,Lang.DATA_SUCCESS,result);
     }catch(err){
         return response.accessDenied(h,err.message,"signup");

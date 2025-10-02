@@ -6,23 +6,24 @@ const CryptoJS = require('crypto-js');
 const SECRET_KEY = 'yyQV36lzy8k/qUr4hbXXq2bBapVGBZzUtLvshVoQDLj46Uad6PeA4Zk85eKetTbT';
 
 module.exports.configure = async (server) => {
-
-  server.ext('onPostAuth', (request, h) => {
+  server.ext('onRequest', (request, h) => {
+    let lastSegment = null;
+    if(request.headers && request.headers["referer"]){
+      lastSegment =  request.headers["referer"].split('/').pop()
+    }
     let data = {};
-    request.payload = "U2FsdGVkX1+TMa9DLbn8YRc0SuOcIzhOYGUbW1x4S6xHs4vdw+WtCWODUiCiQyc9cp80pU+fByTmQ2N+58R0U2x1JdzjgLPaHhq88AfjsbY6UiVtO0r/SZu2fVgauLN3"
-    // console.log(request.payload === 'string', "checkcjscos")
+    if (lastSegment !== "documentation" && request.payload) {
+      const bodyString =
+        typeof request.payload === 'string'
+          ? request.payload
+          : JSON.stringify(request.payload);
 
-    const bodyString =
-      typeof request.payload === 'string'
-        ? request.payload
-        : JSON.stringify(request.payload);
-
-    data = CryptoJS.AES.decrypt(bodyString, SECRET_KEY).toString(CryptoJS.enc.Utf8);
-    // console.log('Payload encrypted:', data);
-    request.payload = JSON.parse(data);
+      data = CryptoJS.AES.decrypt(bodyString, SECRET_KEY).toString(CryptoJS.enc.Utf8);
+      console.log('Payload encrypted:', data);
+      request.payload = JSON.parse(data);
+    }
     return h.continue;
   });
-
 
   server.ext('onPreResponse', (request, h) => {
     const response = request.response;

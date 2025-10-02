@@ -4,9 +4,10 @@ const roleSchema = new mongoose.Schema({
     name: { type: String, required: true }, // e.g., 'SuperAdmin', 'Editor'
     slug: { type: String, required: true },
     description: { type: String },
-    permissions: [String],// e.g., ['read', 'write', 'delete']
+    permissions: [String],  // e.g. ['read', 'write', 'delete']
     is_deleted: { type: Boolean, default: false },
-    status: { type: String },
+    menues:[],
+    status: { type: String, enum:["active","inactive"], default: "active" },
     created_by: { type: String },
     updated_by: { type: String }
 },
