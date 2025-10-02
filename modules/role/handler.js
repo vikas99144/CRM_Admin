@@ -27,7 +27,7 @@ const create = async (request, h) => {
 const view = async (request, h) => {
     try {
         console.log("==")
-        const result = await controller.view(request.payload);
+        const result = await controller.view(request.params);
         return Response.success(h, Lang.DATA_SUCCESS, result);
     } catch (err) {
         return Response.internalServer(h, err.message);

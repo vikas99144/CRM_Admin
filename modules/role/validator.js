@@ -16,7 +16,7 @@ module.exports = {
 
     view: {
         params: Joi.object({
-            id: Joi.string().email().required().description('Id is required'),
+            id: Joi.string().required().description('Id is required'),
         })
     },
 

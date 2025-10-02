@@ -1,8 +1,17 @@
 'use strict'
 
 const md5 = require('md5')
-const crypto = require('crypto')
+const crypto = require('crypto');
+const Mongoose = require("mongoose");
 const config = require('../config/dev.json').token;
+
+const ObjectId = (id) => {
+    return Mongoose.Types.ObjectId.createFromHexString(id);
+}
+
+const hexaId = (id) => {
+    return id.toHexaString();
+}
 
 const getHash = (password) => {
     let hash = crypto.createHmac('sha512', config.secret) 
@@ -37,5 +46,7 @@ const slugify = (value) => {
 
 exports.getHash = getHash;
 exports.slugify = slugify;
+exports.ObjectId = ObjectId;
+exports.hexaId = hexaId;
 exports.compareHash = compareHash;
 exports.randomToken = randomToken;

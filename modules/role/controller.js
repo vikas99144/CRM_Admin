@@ -2,6 +2,7 @@
 
 const Operation = require("../../operations");
 const Mongoose = require("mongoose");
+const { ObjectId} = require("../../utils");
 
 exports.create = async (data, h) => {
     let model = Mongoose.models.roles;
@@ -9,7 +10,21 @@ exports.create = async (data, h) => {
 }
 
 exports.view = async (data) => {
+     let model = Mongoose.models.roles, matchQuery = {};
+    matchQuery["$and"] = [];
+    matchQuery["$and"].push({is_deleted: false, _id: ObjectId(data.id)})
 
+    let aggregateQuery = [
+        {
+            $match: matchQuery
+        },
+        {
+            $project:{
+                slug: 0
+            }
+        }
+    ]
+   return await Operation.GET(model, aggregateQuery);
 }
 
 

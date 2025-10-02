@@ -8,9 +8,9 @@ module.exports.EXIST = async (model,query) => {
     }
 }
 
-module.exports.GET = async (model,query) => {
+module.exports.GET = async (model,aggregate) => {
     try {
-        return await model.aggregation(query).exec();
+        return await model.aggregate(aggregate).exec();
     } catch (err) {
         throw new Error(err.message);
     }
@@ -19,7 +19,6 @@ module.exports.GET = async (model,query) => {
 
 module.exports.FILTER = async (model,aggregate) => {
     try {
-        console.log("==aggregate",aggregate)
         return await model.aggregate(aggregate).exec();
     } catch (err) {
          throw new Error(err.message);
