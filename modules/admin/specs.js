@@ -4,6 +4,8 @@ const validator = require('./validator');
 const userAuth = require('../../auth/auth');
 const response = require("../../response");
 
+
+
 module.exports = {
 
     create: {
@@ -100,10 +102,17 @@ module.exports = {
                 }
             }
         },
-        pre: [{
-            method: userAuth.verifyToken,
-            assign: 'token'
-        }],
+        pre: [
+            {
+                method: userAuth.verifyToken,
+                assign: 'token'
+            },
+            {
+                method: userAuth.checkRoleAccess(["superadmin2"]),
+                assign: 'checkRoleAccess'  
+            }
+            
+        ],
         validate: {
             query: validator.list.query,
             failAction: response.failAction
@@ -128,6 +137,10 @@ module.exports = {
                 }
             }
         },
+        pre: [{
+            method: userAuth.verifyToken,
+            assign: 'token'
+        }],
         validate: {
             params: validator.remove.params,
             failAction: response.failAction
@@ -152,6 +165,10 @@ module.exports = {
                 }
             }
         },
+        pre: [{
+            method: userAuth.verifyToken,
+            assign: 'token'
+        }],
         validate: {
             params: validator.status.params,
             payload: validator.status.payload,
@@ -177,6 +194,10 @@ module.exports = {
                 }
             }
         },
+        pre: [{
+            method: userAuth.verifyToken,
+            assign: 'token'
+        }],
         validate: {
             params: validator.status.params,
             payload: validator.status.payload,

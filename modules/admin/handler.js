@@ -39,6 +39,7 @@ const login = async (request, h) => {
             return Response.validation(h, Lang.INCORRECT_CREDENTIALS);
         }
         payload.id = isExist._id;
+        payload.role = isExist.role;
         const result = await controller.login(payload, h);
         return Response.success(h, Lang.LOGIN_SUCCESS, result);
     } catch (err) {

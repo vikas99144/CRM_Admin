@@ -14,7 +14,7 @@ exports.create = async (data, h) => {
 }
 
 exports.login = async (data, h) => {
-    data.token = createToken(data.id);
+    data.token = createToken(data.id, data.role);
     let model = Mongoose.models.admins,
         query = { _id: data.id },
         updateObj = { token: data.token },
