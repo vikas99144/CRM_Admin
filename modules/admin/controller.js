@@ -1,64 +1,119 @@
 'use strict'
-const auth = require('../../auth/auth');
-const mongoose = require("mongoose");
 
+const Operation = require("../../operations");
+const Mongoose = require("mongoose");
+const { createToken } = require("../../auth/auth");
+const { getHash,count} = require("../../helpers");
+const { ObjectId } = require("../../utils");
 
-exports.add = async (data) => {
-    return new Promise(async(resolve, reject) => {
-        try {
-
-            console.log("000",data);
-            resolve(data);
-            // let result = await mongoose.models.users.findOne().exec();
-
-        } catch (error) {
-            reject(error);
-        }
-    })
-
+exports.create = async (data, h) => {
+    let model = Mongoose.models.admins;
+    data.pwd = await getHash(data.pwd);
+    data.admin_id = `ADM_${await count("admin")}`;
+    return await Operation.CREATE(model, data);
 }
 
-exports.login = async (data) => {
-    return new Promise(async(resolve, reject) => {
-        try {
-            let query = { email: data.email };
-            let userExist  = await userModel.findOne({email: data.email});
-            if(!userExist){
-                reject({isSuccess: false, message:"Not found"})
-            }
-            let token = auth.createToken()
-            userModel.findOneAndUpdate(query, data, { upsert: true, new: true }, (err, resdata) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resdata.token = auth.createToken(resdata.id)
-                    resolve(resdata);
-                }
-            })
-        } catch (error) {
-            reject(error);
-        }
-    })
 
+exports.login = async (data, h) => {
+      data.token = createToken(data.id);
+    let model = Mongoose.models.admins,
+        query = { _id: data.id },
+        updateObj = { token: data.token },
+        populateQuery = [
+            {
+                path:"role",
+                select: "name slug"
+            }
+        ],
+        selection = "-updated_at -slug -created_at -token -pwd -is_deleted";
+  
+     
+    let user = await Operation.PATCH(model, query,updateObj,populateQuery,selection);
+    user.token = data.token;
+    return user;
+}
+
+exports.view = async (data) => {
+    let model = Mongoose.models.admins, matchQuery = {};
+    matchQuery["$and"] = [];
+    matchQuery["$and"].push({ is_deleted: false, _id: ObjectId(data.id) })
+    let aggregateQuery = [
+        {
+            $match: matchQuery
+        },
+        {
+            $project: {
+                slug: 0
+            }
+        }
+    ]
+    return await Operation.GET(model, aggregateQuery);
 }
 
 
 exports.list = async (data) => {
-    return new Promise(async(resolve, reject) => {
-        try {
-            let query = { };
-            userModel.find(query, (err, resdata) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(resdata);
-                }
-            })
-        } catch (error) {
-            reject(error);
-        }
-    })
+    let { page, limit, search, start_date, end_date } = data;
+    page = data.page || 1;
+    limit = data.limit || 10;
+    let model = Mongoose.models.admins, matchQuery = {};
+    matchQuery["$and"] = [];
+    matchQuery["$and"].push({ is_deleted: false })
+    if (search) {
+        matchQuery["$or"] = [];
+        matchQuery.push({ name: { $regex: search, $options: "i" } });
+    }
 
+    if (start_date) {
+        matchQuery["$and"].push({ created_at: { $gte: start_date } });
+    }
+    if (end_date) {
+        matchQuery["$and"].push({ created_at: { $lte: end_date } });
+    }
+
+    if (start_date && end_date) {
+        matchQuery["$and"].push({ created_at: { $gte: start_date, $lte: end_date } });
+    }
+    let aggregateQuery = [
+        {
+            $match: matchQuery
+        },
+        { $sort: { created_at: -1 } },
+        { $skip: (page - 1) * limit },
+        { $limit: parseInt(limit) },
+        {
+            $project: {
+                slug: 0
+            }
+        }
+    ]
+
+    return await Operation.FILTER(model, aggregateQuery);
+}
+
+exports.status = async (data, h) => {
+    let model = Mongoose.models.admins,
+        query = { _id: ObjectId(data.id) },
+        updateObj = { status: data.status },
+        populateQuery = [],
+        selection = "-updated_at -slug -created_at";
+    return await Operation.PATCH(model, query, updateObj, populateQuery, selection);
+}
+
+
+exports.remove = async (data, h) => {
+    let model = Mongoose.models.admins;
+    let query = { _id: ObjectId(data.id) };
+    let updateObj = {is_deleted: true};
+    return await Operation.SOFT_DELETE(model, query, updateObj);
+}
+
+exports.update = async (data, h) => {
+    let model = Mongoose.models.admins,
+        query = { _id: ObjectId(data.id) },
+        updateObj = { name: data.name,slug: data.slug },
+        populateQuery = [],
+        selection = "-updated_at -slug -created_at";
+    return await Operation.PATCH(model, query, updateObj, populateQuery, selection);
 }
 
 

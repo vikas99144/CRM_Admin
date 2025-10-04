@@ -14,7 +14,6 @@ const configurations = async (server) => {
   await require('./settings/main').configure(server)
   await require('./settings/swagger').configure(server)
   await require('./settings/encryptDecrypt').configure(server)
-
   init()
 }
 

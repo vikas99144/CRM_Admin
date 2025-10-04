@@ -2,7 +2,7 @@
 
 const Operation = require("../../operations");
 const Mongoose = require("mongoose");
-const { ObjectId} = require("../../utils");
+const { ObjectId } = require("../../utils");
 
 exports.create = async (data, h) => {
     let model = Mongoose.models.roles;
@@ -10,21 +10,21 @@ exports.create = async (data, h) => {
 }
 
 exports.view = async (data) => {
-     let model = Mongoose.models.roles, matchQuery = {};
+    let model = Mongoose.models.roles, matchQuery = {};
     matchQuery["$and"] = [];
-    matchQuery["$and"].push({is_deleted: false, _id: ObjectId(data.id)})
+    matchQuery["$and"].push({ is_deleted: false, _id: ObjectId(data.id) })
 
     let aggregateQuery = [
         {
             $match: matchQuery
         },
         {
-            $project:{
+            $project: {
                 slug: 0
             }
         }
     ]
-   return await Operation.GET(model, aggregateQuery);
+    return await Operation.GET(model, aggregateQuery);
 }
 
 
@@ -34,7 +34,7 @@ exports.list = async (data) => {
     limit = data.limit || 10;
     let model = Mongoose.models.roles, matchQuery = {};
     matchQuery["$and"] = [];
-    matchQuery["$and"].push({is_deleted: false})
+    matchQuery["$and"].push({ is_deleted: false })
     if (search) {
         matchQuery["$or"] = [];
         matchQuery.push({ name: { $regex: search, $options: "i" } });
@@ -48,23 +48,49 @@ exports.list = async (data) => {
     }
 
     if (start_date && end_date) {
-        matchQuery["$and"].push({ created_at: {$gte: start_date, $lte: end_date } });
+        matchQuery["$and"].push({ created_at: { $gte: start_date, $lte: end_date } });
     }
     let aggregateQuery = [
         {
             $match: matchQuery
         },
-        {$sort:{created_at: -1}},
-        {$skip: (page -1) * limit},
-        {$limit: parseInt(limit)},
+        { $sort: { created_at: -1 } },
+        { $skip: (page - 1) * limit },
+        { $limit: parseInt(limit) },
         {
-            $project:{
+            $project: {
                 slug: 0
             }
         }
     ]
 
     return await Operation.FILTER(model, aggregateQuery);
+}
+
+exports.status = async (data, h) => {
+    let model = Mongoose.models.roles,
+        query = { _id: ObjectId(data.id) },
+        updateObj = { status: data.status },
+        populateQuery = [],
+        selection = "-updated_at -slug -created_at";
+    return await Operation.PATCH(model, query, updateObj, populateQuery, selection);
+}
+
+
+exports.remove = async (data, h) => {
+    let model = Mongoose.models.roles;
+    let query = { _id: ObjectId(data.id) };
+    let updateObj = {is_deleted: true};
+    return await Operation.SOFT_DELETE(model, query, updateObj);
+}
+
+exports.update = async (data, h) => {
+    let model = Mongoose.models.roles,
+        query = { _id: ObjectId(data.id) },
+        updateObj = { name: data.name,slug: data.slug },
+        populateQuery = [],
+        selection = "-updated_at -slug -created_at";
+    return await Operation.PATCH(model, query, updateObj, populateQuery, selection);
 }
 
 

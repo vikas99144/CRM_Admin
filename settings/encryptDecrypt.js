@@ -7,6 +7,7 @@ const SECRET_KEY = 'yyQV36lzy8k/qUr4hbXXq2bBapVGBZzUtLvshVoQDLj46Uad6PeA4Zk85eKe
 
 module.exports.configure = async (server) => {
   server.ext('onRequest', (request, h) => {
+    console.log(">>>> >>> >>> ===")
     let lastSegment = null;
     if(request.headers && request.headers["referer"]){
       lastSegment =  request.headers["referer"].split('/').pop()

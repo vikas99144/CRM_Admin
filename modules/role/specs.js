@@ -129,4 +129,29 @@ module.exports = {
             failAction: response.failAction
         }
     },
+
+    update: {
+        description: 'Role status',
+        notes: 'Role status',
+        tags: ['Role', "api"],
+        plugins: {
+            'hapi-swagger': {
+                responses: {
+                    200: {
+                        description: 'Example of response model in return to success request',
+                        schema: validator.success
+                    },
+                    320: {
+                        description: 'Example of response model in return to failure request',
+                        schema: validator.failure
+                    }
+                }
+            }
+        },
+        validate: {
+            params: validator.status.params,
+            payload: validator.status.payload,
+            failAction: response.failAction
+        }
+    },
 }

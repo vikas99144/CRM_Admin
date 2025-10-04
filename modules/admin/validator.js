@@ -3,31 +3,82 @@
 
 const Joi = require('joi');
 
-
 module.exports = {
-    register: {
-        payload: Joi.object({ 
-            name: Joi.string().required().description('Name is required'),
-            email: Joi.string().email().required().description('Email is required'),
-            password: Joi.string().required().description('Password is required') 
-        })
 
+    create: {
+        payload: Joi.object({
+            name: Joi.string().required().description('Name is required'),
+            email: Joi.string().required().email().description('Email is required'),
+            country_code: Joi.string().required().description('Country code is required'),
+            contact_number: Joi.string().required().description('Country number is required'),
+            role: Joi.string().required().description('Role is required'),
+            pwd: Joi.string()
+                .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#?!@$%^&*-]).{8,}$'))
+                .required()
+                .description('Password is required')
+                .messages({
+                    'string.pattern.base': 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.'
+                })
+        })
     },
 
     login: {
-        payload: Joi.object({ 
-            email: Joi.string().email().required().description('Email is required'),
-            password: Joi.string().required().description('Password is required') 
+        payload: Joi.object({
+            email: Joi.string().required().email().description('Email is required'),
+            pwd: Joi.string()
+                .required()
+                .description('Password is required')
         })
+    },
 
+    view: {
+        params: Joi.object({
+            id: Joi.string().required().description('Id is required'),
+        })
+    },
+
+    remove: {
+        params: Joi.object({
+            id: Joi.string().email().required().description('Id is required'),
+        })
     },
 
     list: {
-        payload: Joi.object({ 
-            page: Joi.number(),
-            limit: Joi.number()
+        query: Joi.object({
+            page: Joi.number().required().default(1),
+            limit: Joi.number().required().default(10)
         })
+    },
 
+    status: {
+        params: Joi.object({
+            id: Joi.string().required().description('Id is required')
+        }),
+        payload: Joi.object({
+            status: Joi.string()
+                .required()
+                .valid('active', 'inactive')
+                .description('Status is required')
+                .messages({
+                    'any.only': 'Invalid status: must be either active or inactive'
+                })
+        })
+    },
+
+    remove: {
+        params: Joi.object({
+            id: Joi.string().required().description('Id is required')
+        })
+    },
+
+    status: {
+        params: Joi.object({
+            id: Joi.string().required().description('Id is required')
+        }),
+        payload: Joi.object({
+            name: Joi.string()
+                .required()
+                .description('Name is required')
+        })
     }
-
 } 

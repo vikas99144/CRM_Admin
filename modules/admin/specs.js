@@ -2,13 +2,13 @@
 
 const validator = require('./validator');
 const userAuth = require('../../auth/auth');
-const Response = require("../../response");
+const response = require("../../response");
 
 module.exports = {
-    signup: {
-        description: 'Admin signUp',
-        notes: 'Admin signUp',
-         tags: ["Admin","api"],
+    create: {
+        description: 'Add',
+        notes: 'Add',
+        tags: ['Admin', "api"],
         plugins: {
             'hapi-swagger': {
                 responses: {
@@ -24,17 +24,15 @@ module.exports = {
             }
         },
         validate: {
-            payload: validator.register.payload,
-            failAction: Response.failAction
-
+            payload: validator.create.payload,
+            failAction: response.failAction
         }
-
     },
 
     login: {
-        description: 'Admin login',
-        notes: 'Admin login',
-           tags: ["Admin","api"],
+        description: 'Login',
+        notes: 'Login',
+        tags: ['Admin', "api"],
         plugins: {
             'hapi-swagger': {
                 responses: {
@@ -51,16 +49,14 @@ module.exports = {
         },
         validate: {
             payload: validator.login.payload,
-            failAction: Response.failAction
-
+            failAction: response.failAction
         }
-
     },
 
-    list: {
-        description: 'Admin list',
-        notes: 'Admin list',
-        tags: ["Admin","api"],
+    view: {
+        description: 'View',
+        notes: 'View',
+        tags: ['Admin', "api"],
         plugins: {
             'hapi-swagger': {
                 responses: {
@@ -75,16 +71,111 @@ module.exports = {
                 }
             }
         },
-        pre: [{
-            method: userAuth.verifyToken,
-            assign: 'token'
-        }],
         validate: {
-            payload: validator.list.payload,
-            failAction: Response.failAction
-
+            params: validator.view.params,
+            failAction: response.failAction
         }
+    },
 
-    }
+    list: {
+        description: 'List',
+        notes: 'List',
+        tags: ['Admin', "api"],
+        plugins: {
+            'hapi-swagger': {
+                responses: {
+                    200: {
+                        description: 'Example of response model in return to success request',
+                        schema: validator.success
+                    },
+                    320: {
+                        description: 'Example of response model in return to failure request',
+                        schema: validator.failure
+                    }
+                }
+            }
+        },
+        // pre: [{
+        //     method: userAuth.verifyToken,
+        //     assign: 'token'
+        // }],
+        validate: {
+            query: validator.list.query,
+            failAction: response.failAction
+        }
+    },
 
+    remove: {
+        description: 'Delete',
+        notes: 'Delete',
+        tags: ['Admin', "api"],
+        plugins: {
+            'hapi-swagger': {
+                responses: {
+                    200: {
+                        description: 'Example of response model in return to success request',
+                        schema: validator.success
+                    },
+                    320: {
+                        description: 'Example of response model in return to failure request',
+                        schema: validator.failure
+                    }
+                }
+            }
+        },
+        validate: {
+            params: validator.remove.params,
+            failAction: response.failAction
+        }
+    },
+
+    status: {
+        description: 'Status',
+        notes: 'Status',
+        tags: ['Admin', "api"],
+        plugins: {
+            'hapi-swagger': {
+                responses: {
+                    200: {
+                        description: 'Example of response model in return to success request',
+                        schema: validator.success
+                    },
+                    320: {
+                        description: 'Example of response model in return to failure request',
+                        schema: validator.failure
+                    }
+                }
+            }
+        },
+        validate: {
+            params: validator.status.params,
+            payload: validator.status.payload,
+            failAction: response.failAction
+        }
+    },
+
+    update: {
+        description: 'Update',
+        notes: 'Update',
+        tags: ['Admin', "api"],
+        plugins: {
+            'hapi-swagger': {
+                responses: {
+                    200: {
+                        description: 'Example of response model in return to success request',
+                        schema: validator.success
+                    },
+                    320: {
+                        description: 'Example of response model in return to failure request',
+                        schema: validator.failure
+                    }
+                }
+            }
+        },
+        validate: {
+            params: validator.status.params,
+            payload: validator.status.payload,
+            failAction: response.failAction
+        }
+    },
 }

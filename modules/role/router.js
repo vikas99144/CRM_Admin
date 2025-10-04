@@ -22,11 +22,17 @@ module.exports = [
         options: specs.list,
         handler: handler.list
     },
-        {
+    {
         method: 'PATCH',
         path: '/api/v1/role/status/{id}',
         options: specs.status,
         handler: handler.status
+    },
+       {
+        method: 'PATCH',
+        path: '/api/v1/role/update/{id}',
+        options: specs.update,
+        handler: handler.update
     },
     {
         method: 'DELETE',

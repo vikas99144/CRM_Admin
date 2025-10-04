@@ -38,7 +38,30 @@ module.exports = {
             id: Joi.string().required().description('Id is required')
         }),
         payload: Joi.object({
-            status: Joi.string().required()
+            status: Joi.string()
+                .required()
+                .valid('active', 'inactive')
+                .description('Status is required')
+                .messages({
+                    'any.only': 'Invalid status: must be either active or inactive'
+                })
+        })
+    },
+
+    remove: {
+        params: Joi.object({
+            id: Joi.string().required().description('Id is required')
+        })
+    },
+
+    status: {
+        params: Joi.object({
+            id: Joi.string().required().description('Id is required')
+        }),
+        payload: Joi.object({
+            name: Joi.string()
+                .required()
+                .description('Name is required')
         })
     }
 } 

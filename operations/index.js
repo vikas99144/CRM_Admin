@@ -33,9 +33,9 @@ module.exports.HARD_DELETE = async (model,query) => {
     }
 }
 
-module.exports.SOFT_DELETE = async (model,query) => {
+module.exports.SOFT_DELETE = async (model,query,update) => {
     try {
-        return await model.findOneAndUpdate(query).exec();
+        return await model.findOneAndUpdate(query,update,{new: true}).exec();
     } catch (err) {
          throw new Error(err.message);
     }
@@ -43,7 +43,7 @@ module.exports.SOFT_DELETE = async (model,query) => {
 
 module.exports.PUT = async (model,query,update,populateQuery,selection) => {
     try {
-        return await model.findOneAndUpdate(query,update,{upsert: true, new: true}).populate(populateQuery).select({selection}).exec();
+        return await model.findOneAndUpdate(query,update,{upsert: true, new: true}).populate(populateQuery).select(selection).exec();
     } catch (err) {
          throw new Error(err.message);
     }
@@ -51,7 +51,7 @@ module.exports.PUT = async (model,query,update,populateQuery,selection) => {
 
 module.exports.PATCH = async (model,query,update,populateQuery,selection) => {
     try {
-          return await model.findOneAndUpdate(query,update,{new: true}).populate(populateQuery).select({selection}).exec();
+          return await model.findOneAndUpdate(query,update,{new: true}).populate(populateQuery).select(selection).exec();
     } catch (err) {
          throw new Error(err.message);
     }
