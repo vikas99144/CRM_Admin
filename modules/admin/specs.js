@@ -5,6 +5,7 @@ const userAuth = require('../../auth/auth');
 const response = require("../../response");
 
 module.exports = {
+
     create: {
         description: 'Add',
         notes: 'Add',
@@ -71,6 +72,10 @@ module.exports = {
                 }
             }
         },
+        pre: [{
+            method: userAuth.verifyToken,
+            assign: 'token'
+        }],
         validate: {
             params: validator.view.params,
             failAction: response.failAction
@@ -95,10 +100,10 @@ module.exports = {
                 }
             }
         },
-        // pre: [{
-        //     method: userAuth.verifyToken,
-        //     assign: 'token'
-        // }],
+        pre: [{
+            method: userAuth.verifyToken,
+            assign: 'token'
+        }],
         validate: {
             query: validator.list.query,
             failAction: response.failAction

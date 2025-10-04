@@ -1,5 +1,15 @@
 'use strict'
 
+
+module.exports.TOTAL_COUNT = async (model,matchQuery) => {
+    console.log("==matchQuery===", matchQuery);
+    try {
+        return await model.aggregate([{$match: matchQuery},{  $group: {_id: null,count: { $sum: 1 }}}]).exec();
+    } catch (err) {
+         throw new Error(err.message);
+    }
+}
+
 module.exports.EXIST = async (model,query) => {
     try {
         return await model.findOne(query).lean();

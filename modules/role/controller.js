@@ -64,7 +64,10 @@ exports.list = async (data) => {
         }
     ]
 
-    return await Operation.FILTER(model, aggregateQuery);
+    let count = await Operation.TOTAL_COUNT(model,matchQuery); 
+    let total = count.length > 0 ? count[0].count: count;
+    let result = await Operation.FILTER(model, aggregateQuery);
+    return {data: result, total: total}
 }
 
 exports.status = async (data, h) => {

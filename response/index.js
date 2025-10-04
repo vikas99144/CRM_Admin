@@ -12,15 +12,13 @@ const success = (h, message, data) => {
 }
 
 
-const list = (h, items, pageSize, pageNo, total) => {
+const list = (h, items, total) => {
     const res = h.response({
         isSuccess: true,
         status: 'success',
         statusCode: 200,
-        pageNo: pageNo || 1,
-        data: items,
-        pageSize: pageSize || items.length,
-        count: total
+        total: total,
+        data: items
     })
     res.code(200)
     return res

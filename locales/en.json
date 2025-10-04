@@ -3,6 +3,7 @@
 	"NOT_AUTHORIZED": "Not Authorized!",
 	"NAME_IS_REQUIRED": "Name is required!",
 	"INCORRECT_CREDENTIALS": "Incorrect credentials.",
+	"UNAUTHORIZED_ACCESS":"Unauthorized access.",
 	"OTP_EXPIRED": "OTP Expired!",
 	"MOB_NO_NOT_EXIST_OR_OTP_INVALID": "Mobile Number don't exists! or OTP is invalid!",
 	"PASSWORD_RESET_SUCCESS": "Password Reset Successfully!",

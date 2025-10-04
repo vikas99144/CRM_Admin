@@ -2,6 +2,7 @@
 
 const Response = require("../response");
 const jwt = require('jsonwebtoken');
+const Lang = require("../locales/en.json");
 const config = require('../config/dev.json').token;
 
 const createToken = (id) => {
@@ -15,10 +16,11 @@ const createToken = (id) => {
 const verifyToken = async (request, reply) => {
     let token = request.headers.authorization || request.headers['token'];
     if (!token) {
-        return Response.failure(reply, "Error in jwt");
+        return Response.failure(reply, Lang.UNAUTHORIZED_ACCESS);
     }
     return jwt.verify(token, config.secret, (err, user) => {
         if (err) {
+            console.log(err);
             return Response.failure(reply, "Error error errro");
         }
         request.user = user;

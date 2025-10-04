@@ -59,12 +59,11 @@ const view = async (request, h) => {
 const list = async (request, h) => {
     try {
         const result = await controller.list(request.query);
-        return Response.success(h, Lang.LIST_SUCCESS, result);
+        return Response.list(h, result.data, result.total);
     } catch (err) {
         return Response.internalServer(h, err.message);
     }
 }
-
 
 const status = async (request, h) => {
     try {
@@ -89,7 +88,6 @@ const update = async (request, h) => {
     try {
         let payload = request.payload;
         payload.id = request.params.id;
-
         payload.slug = Utils.slugify(payload.name);
         let model = Mongoose.models.roles;
         let query = { slug: payload.slug, is_deleted: false };

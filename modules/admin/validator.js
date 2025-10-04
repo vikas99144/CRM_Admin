@@ -46,8 +46,10 @@ module.exports = {
     list: {
         query: Joi.object({
             page: Joi.number().required().default(1),
-            limit: Joi.number().required().default(10)
-        })
+            limit: Joi.number().required().default(10),
+            search: Joi.string().optional(),
+            role: Joi.string().optional()
+        }).unknown(true)
     },
 
     status: {

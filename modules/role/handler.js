@@ -34,10 +34,11 @@ const view = async (request, h) => {
     }
 }
 
+
 const list = async (request, h) => {
     try {
         const result = await controller.list(request.query);
-        return Response.success(h, Lang.LIST_SUCCESS, result);
+        return Response.list(h,result.data, result.total );
     } catch (err) {
         return Response.internalServer(h, err.message);
     }
