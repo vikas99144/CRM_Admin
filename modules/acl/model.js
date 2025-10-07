@@ -2,7 +2,7 @@
 
 const mongoose = require("mongoose");
 
-const menuSchema = new mongoose.Schema({
+const aclSchema = new mongoose.Schema({
     name: { type: String, required: true },
     slug: { type: String, required: true },
     is_deleted: { type: Boolean, default: false },
@@ -19,7 +19,7 @@ const menuSchema = new mongoose.Schema({
     })
 
 
-module.exports = mongoose.model('menues', menuSchema, 'menues');
+module.exports = mongoose.model('acls', aclSchema, 'acls');
 
 
 
