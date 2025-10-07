@@ -2,7 +2,6 @@
 
 
 module.exports.TOTAL_COUNT = async (model,matchQuery) => {
-    console.log("==matchQuery===", matchQuery);
     try {
         return await model.aggregate([{$match: matchQuery},{  $group: {_id: null,count: { $sum: 1 }}}]).exec();
     } catch (err) {

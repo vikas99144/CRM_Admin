@@ -7,9 +7,6 @@ const getHash = async(password) => {
 }
 
 const compareHash = async (password, hash) => {
-
-    console.log("==password===", password);
-    console.log("===hash===", hash);
     return bcrypt.compare(password, hash)
 }
 

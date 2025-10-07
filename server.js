@@ -1,5 +1,7 @@
 'use strict'
 
+const dotenv = require('dotenv');
+dotenv.config();
 const hapi = require('@hapi/hapi');
 const serverConfig = require('./config/dev.json');
 const cluster = require('cluster');

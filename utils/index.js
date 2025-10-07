@@ -17,7 +17,6 @@ const randomToken = (value) => {
 }
 
 const slugify = (value) => {
-    console.log("==value",value);
    return value
         .toLowerCase()
         .trim()

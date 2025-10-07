@@ -26,6 +26,16 @@ module.exports = {
                 }
             }
         },
+        pre: [
+            {
+                method: userAuth.verifyToken,
+                assign: 'token'
+            },
+            {
+                method: userAuth.checkRoleAccess(["superadmin"]),
+                assign: 'checkRoleAccess'
+            }
+        ],
         validate: {
             payload: validator.create.payload,
             failAction: response.failAction
@@ -50,6 +60,16 @@ module.exports = {
                 }
             }
         },
+        pre: [
+            {
+                method: userAuth.verifyToken,
+                assign: 'token'
+            },
+            {
+                method: userAuth.checkRoleAccess(["admin", "superadmin"]),
+                assign: 'checkRoleAccess'
+            }
+        ],
         validate: {
             payload: validator.login.payload,
             failAction: response.failAction
@@ -74,10 +94,16 @@ module.exports = {
                 }
             }
         },
-        pre: [{
-            method: userAuth.verifyToken,
-            assign: 'token'
-        }],
+        pre: [
+            {
+                method: userAuth.verifyToken,
+                assign: 'token'
+            },
+            {
+                method: userAuth.checkRoleAccess(["admin", "superadmin"]),
+                assign: 'checkRoleAccess'
+            }
+        ],
         validate: {
             params: validator.view.params,
             failAction: response.failAction
@@ -108,10 +134,9 @@ module.exports = {
                 assign: 'token'
             },
             {
-                method: userAuth.checkRoleAccess(["superadmin2"]),
-                assign: 'checkRoleAccess'  
+                method: userAuth.checkRoleAccess(["admin", "superadmin"]),
+                assign: 'checkRoleAccess'
             }
-            
         ],
         validate: {
             query: validator.list.query,
@@ -137,10 +162,16 @@ module.exports = {
                 }
             }
         },
-        pre: [{
-            method: userAuth.verifyToken,
-            assign: 'token'
-        }],
+        pre: [
+            {
+                method: userAuth.verifyToken,
+                assign: 'token'
+            },
+            {
+                method: userAuth.checkRoleAccess(["admin", "superadmin"]),
+                assign: 'checkRoleAccess'
+            }
+        ],
         validate: {
             params: validator.remove.params,
             failAction: response.failAction
@@ -165,10 +196,16 @@ module.exports = {
                 }
             }
         },
-        pre: [{
-            method: userAuth.verifyToken,
-            assign: 'token'
-        }],
+        pre: [
+            {
+                method: userAuth.verifyToken,
+                assign: 'token'
+            },
+            {
+                method: userAuth.checkRoleAccess(["admin", "superadmin"]),
+                assign: 'checkRoleAccess'
+            }
+        ],
         validate: {
             params: validator.status.params,
             payload: validator.status.payload,
@@ -194,10 +231,16 @@ module.exports = {
                 }
             }
         },
-        pre: [{
-            method: userAuth.verifyToken,
-            assign: 'token'
-        }],
+        pre: [
+            {
+                method: userAuth.verifyToken,
+                assign: 'token'
+            },
+            {
+                method: userAuth.checkRoleAccess(["admin", "superadmin"]),
+                assign: 'checkRoleAccess'
+            }
+        ],
         validate: {
             params: validator.status.params,
             payload: validator.status.payload,

@@ -41,7 +41,6 @@ const verifyToken = async (request, reply) => {
 exports.checkRoleAccess = (allowedRoles) => {
     return (request, h) => {
         const userRole = request.role?.slug;
-        console.log("==userRole==", userRole);
         if (!allowedRoles.includes(userRole)) {
             throw Boom.forbidden('Access denied');
         }
