@@ -5,10 +5,10 @@ const userAuth = require('../../auth/auth');
 const Response = require("../../response");
 
 module.exports = {
-    add: {
-        description: 'Menu Add',
-        notes: 'Menu Add',
-         tags: ["Menu", "api"],
+    create: {
+        description: 'Acl Add',
+        notes: 'Acl Add',
+         tags: ["Acl", "api"],
         plugins: {
             'hapi-swagger': {
                 responses: {
@@ -24,7 +24,7 @@ module.exports = {
             }
         },
         validate: {
-            payload: validator.register.payload,
+            payload: validator.create.payload,
             failAction: Response.failAction
 
         }
@@ -32,9 +32,9 @@ module.exports = {
     },
 
     view: {
-        description: 'Menu view',
-        notes: 'Menu view',
-        tags: ["Menu", "api"],
+        description: 'Acl view',
+        notes: 'Acl view',
+        tags: ["Acl", "api"],
         plugins: {
             'hapi-swagger': {
                 responses: {
@@ -58,9 +58,9 @@ module.exports = {
     },
 
     list: {
-        description: 'Menu list',
-        notes: 'Menu list',
-        tags: ["Menu", "api"],
+        description: 'Acl list',
+        notes: 'Acl list',
+        tags: ["Acl", "api"],
         plugins: {
             'hapi-swagger': {
                 responses: {
@@ -84,6 +84,40 @@ module.exports = {
             failAction: Response.failAction
         }
 
-    }
+    },
+
+        remove: {
+            description: 'Delete',
+            notes: 'Delete',
+            tags: ['Acl', "api"],
+            plugins: {
+                'hapi-swagger': {
+                    responses: {
+                        200: {
+                            description: 'Example of response model in return to success request',
+                            schema: validator.success
+                        },
+                        320: {
+                            description: 'Example of response model in return to failure request',
+                            schema: validator.failure
+                        }
+                    }
+                }
+            },
+            pre: [
+                {
+                    method: userAuth.verifyToken,
+                    assign: 'token'
+                },
+                {
+                    method: userAuth.checkRoleAccess(["admin", "superadmin"]),
+                    assign: 'checkRoleAccess'
+                }
+            ],
+            validate: {
+                params: validator.remove.params,
+                failAction: Response.failAction
+            }
+        },
 
 }

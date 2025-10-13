@@ -26,7 +26,6 @@ const create = async (request, h) => {
 
 const view = async (request, h) => {
     try {
-        console.log("==")
         const result = await controller.view(request.params);
         return Response.success(h, Lang.VIEW_SUCCESS, result);
     } catch (err) {
@@ -47,7 +46,7 @@ const list = async (request, h) => {
 
 const status = async (request, h) => {
     try {
-        const result = await controller.status({id: request.params.id, ...request.payload});
+        const result = await controller.status({role_id: request.params.role_id, ...request.payload});
         return Response.success(h, Lang.UPDATE_SUCCESS, result);
     } catch (err) {
         console.log(err);

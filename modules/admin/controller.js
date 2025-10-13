@@ -9,7 +9,7 @@ const { ObjectId } = require("../../utils");
 exports.create = async (data, h) => {
     let model = Mongoose.models.admins;
     data.pwd = await getHash(data.pwd);
-    data.admin_id = `ADM_${await count("admin")}`;
+    data.id = `ADM_${await count("admin")}`;
     return await Operation.CREATE(model, data);
 }
 
@@ -34,7 +34,7 @@ exports.login = async (data, h) => {
 exports.view = async (data) => {
     let model = Mongoose.models.admins, matchQuery = {};
     matchQuery["$and"] = [];
-    matchQuery["$and"].push({ is_deleted: false, _id: ObjectId(data.id) })
+    matchQuery["$and"].push({ is_deleted: false, _id: ObjectId(data.admin_id) })
     let aggregateQuery = [
         {
             $match: matchQuery
@@ -139,7 +139,7 @@ exports.list = async (data) => {
 
 exports.status = async (data, h) => {
     let model = Mongoose.models.admins,
-        query = { _id: ObjectId(data.id) },
+        query = { _id: ObjectId(data.admin_id) },
         updateObj = { status: data.status },
         populateQuery = [],
         selection = "-updated_at -slug -created_at";
@@ -149,18 +149,27 @@ exports.status = async (data, h) => {
 
 exports.remove = async (data, h) => {
     let model = Mongoose.models.admins;
-    let query = { _id: ObjectId(data.id) };
+    let query = { _id: ObjectId(data.admin_id) };
     let updateObj = { is_deleted: true };
     return await Operation.SOFT_DELETE(model, query, updateObj);
 }
 
 exports.update = async (data, h) => {
     let model = Mongoose.models.admins,
-        query = { _id: ObjectId(data.id) },
+        query = { _id: ObjectId(data.admin_id) },
         updateObj = { name: data.name, slug: data.slug },
         populateQuery = [],
         selection = "-updated_at -slug -created_at";
     return await Operation.PATCH(model, query, updateObj, populateQuery, selection);
 }
 
+
+exports.acl = async (data, h) => {
+    let model = Mongoose.models.admins,
+        query = { _id: ObjectId(data.admin_id) },
+        updateObj = { acl: data.acl},
+        populateQuery = [],
+        selection = "-updated_at -slug -created_at";
+    return await Operation.PATCH(model, query, updateObj, populateQuery, selection);
+}
 

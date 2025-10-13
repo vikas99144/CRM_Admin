@@ -6,20 +6,26 @@ const specs = require('./specs');
 module.exports = [
     {
         method: 'POST',
-        path: '/api/v1/menu/add',
-        options: specs.add,
-        handler: handler.add
+        path: '/api/v1/acl/create',
+        options: specs.create,
+        handler: handler.create
     },
     {
         method: 'GET',
-        path: '/api/v1/menu/view/{id}',
+        path: '/api/v1/acl/view/{acl_id}',
         options: specs.view,
         handler: handler.view
     },
     {
         method: 'POST',
-        path: '/api/v1/menu/list',
+        path: '/api/v1/acl/list',
         options: specs.list,
         handler: handler.list
+    },
+    {
+        method: 'DELETE',
+        path: '/api/v1/acl/delete/{acl_id}',
+        options: specs.remove,
+        handler: handler.remove
     }
 ]

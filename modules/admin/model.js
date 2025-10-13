@@ -4,12 +4,13 @@ const { accountStatus } = require("../../constant/enum");
 
 const adminSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    admin_id: {type: String},
+    id: {type: String},
     slug: { type: String, required: true },
     email: { type: String, required: true },
     country_code: { type: String, required: true },
     contact_number: { type: String, required: true },
     role: {type: mongoose.Schema.Types.ObjectId,ref: 'roles',required: true},
+    acls:[{type: mongoose.Schema.Types.ObjectId,ref: 'acls'}],
     token: { type: String, default: null },
     pwd: { type: String },
     is_active: { type: Boolean, default: true },

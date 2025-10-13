@@ -5,6 +5,13 @@ const Joi = require('joi');
 
 module.exports = {
 
+    acl: {
+        payload: Joi.object({
+            admin_id: Joi.string().required().description('Admin id is required'),
+            acl: Joi.array().min(1).required().description('Acl is required')
+        })
+    },
+
     create: {
         payload: Joi.object({
             name: Joi.string().required().description('Name is required'),
@@ -33,13 +40,13 @@ module.exports = {
 
     view: {
         params: Joi.object({
-            id: Joi.string().required().description('Id is required'),
+            admin_id: Joi.string().required().description('Admin id is required'),
         })
     },
 
     remove: {
         params: Joi.object({
-            id: Joi.string().email().required().description('Id is required'),
+            admin_id: Joi.string().required().description('Admin id is required'),
         })
     },
 
@@ -54,7 +61,7 @@ module.exports = {
 
     status: {
         params: Joi.object({
-            id: Joi.string().required().description('Id is required')
+            admin_id: Joi.string().required().description('Admin id is required')
         }),
         payload: Joi.object({
             status: Joi.string()
@@ -69,13 +76,13 @@ module.exports = {
 
     remove: {
         params: Joi.object({
-            id: Joi.string().required().description('Id is required')
+            admin_id: Joi.string().required().description('Admin id is required')
         })
     },
 
     status: {
         params: Joi.object({
-            id: Joi.string().required().description('Id is required')
+            admin_id: Joi.string().required().description('Admin id is required')
         }),
         payload: Joi.object({
             name: Joi.string()

@@ -3,10 +3,28 @@ const Lang = require("../../locales/en.json");
 const Mongoose = require('mongoose');
 const Utils = require("../../utils");
 const { accountStatus } = require("../../constant/enum");
-const {compareHash } = require("../../helpers");
+const { compareHash } = require("../../helpers");
 const Operation = require("../../operations");
 const controller = require('./controller');
 const Response = require("../../response");
+
+
+const acl = async (request, h) => {
+    try {
+        let payload = request.payload;
+        let model = Mongoose.models.admins;
+        let query = { _id: Utils.ObjectId(payload.admin_id), is_deleted: false };
+        let isExist = await Operation.EXIST(model, query);
+        if (!isExist) {
+            return Response.validation(h, Lang.USER_NOT_FOUND);
+        }
+        const result = await controller.acl(payload, h);
+        return Response.success(h, Lang.ACL_ADD_SUCCESS, payload);
+    } catch (err) {
+        console.log(err)
+        return Response.internalServer(h, err.message);
+    }
+}
 
 const create = async (request, h) => {
     try {
@@ -68,7 +86,7 @@ const list = async (request, h) => {
 
 const status = async (request, h) => {
     try {
-        const result = await controller.status({ id: request.params.id, ...request.payload });
+        const result = await controller.status({ admin_id: request.params.admin_id, ...request.payload });
         return Response.success(h, Lang.UPDATE_SUCCESS, result);
     } catch (err) {
         console.log(err);
@@ -106,6 +124,7 @@ const update = async (request, h) => {
 
 exports.view = view;
 exports.list = list;
+exports.acl = acl;
 exports.login = login;
 exports.create = create;
 exports.status = status;

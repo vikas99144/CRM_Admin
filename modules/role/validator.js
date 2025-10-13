@@ -16,13 +16,13 @@ module.exports = {
 
     view: {
         params: Joi.object({
-            id: Joi.string().required().description('Id is required'),
+            role_id: Joi.string().required().description('Role id is required'),
         })
     },
 
     remove: {
         params: Joi.object({
-            id: Joi.string().email().required().description('Id is required'),
+            role_id: Joi.string().email().required().description('Role id is required'),
         })
     },
 
@@ -35,7 +35,7 @@ module.exports = {
 
     status: {
         params: Joi.object({
-            id: Joi.string().required().description('Id is required')
+            role_id: Joi.string().required().description('Role id is required')
         }),
         payload: Joi.object({
             status: Joi.string()
@@ -50,13 +50,13 @@ module.exports = {
 
     remove: {
         params: Joi.object({
-            id: Joi.string().required().description('Id is required')
+            role_id: Joi.string().required().description('Role id is required')
         })
     },
 
     status: {
         params: Joi.object({
-            id: Joi.string().required().description('Id is required')
+            role_id: Joi.string().required().description('Role id is required')
         }),
         payload: Joi.object({
             name: Joi.string()

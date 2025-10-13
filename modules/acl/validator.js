@@ -5,28 +5,32 @@ const Joi = require('joi');
 
 
 module.exports = {
-    register: {
-        payload: Joi.object({ 
-            name: Joi.string().required().description('Name is required'),
-            email: Joi.string().email().required().description('Email is required'),
-            password: Joi.string().required().description('Password is required') 
+    create: {
+        payload: Joi.object({
+            name: Joi.string().required().description('Name is required')
         })
 
     },
 
     view: {
-        params: Joi.object({ 
-            id: Joi.string().required().description('Id is required'),
+        params: Joi.object({
+            acl_id: Joi.string().required().description('Acl id is required'),
         })
 
     },
 
-    list: {
-        payload: Joi.object({ 
-            page: Joi.number(),
-            limit: Joi.number()
+    remove: {
+        params: Joi.object({
+            acl_id: Joi.string().required().description('Acl id is required'),
         })
+    },
 
+    list: {
+        query: Joi.object({
+            page: Joi.number().required().default(1),
+            limit: Joi.number().required().default(10),
+            search: Joi.string().optional()
+        }).unknown(true)
     }
 
 } 

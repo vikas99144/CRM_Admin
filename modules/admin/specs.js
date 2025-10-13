@@ -8,6 +8,40 @@ const response = require("../../response");
 
 module.exports = {
 
+       acl: {
+        description: 'Add acl',
+        notes: 'Add acl',
+        tags: ['Admin', "api"],
+        plugins: {
+            'hapi-swagger': {
+                responses: {
+                    200: {
+                        description: 'Example of response model in return to success request',
+                        schema: validator.success
+                    },
+                    320: {
+                        description: 'Example of response model in return to failure request',
+                        schema: validator.failure
+                    }
+                }
+            }
+        },
+        pre: [
+            {
+                method: userAuth.verifyToken,
+                assign: 'token'
+            },
+            {
+                method: userAuth.checkRoleAccess(["superadmin","admin"]),
+                assign: 'checkRoleAccess'
+            }
+        ],
+        validate: {
+            payload: validator.acl.payload,
+            failAction: response.failAction
+        }
+    },
+
     create: {
         description: 'Add',
         notes: 'Add',

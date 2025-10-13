@@ -18,5 +18,8 @@
 	"ADMIN_CREATE_SUCCESS": "Admin created successfully.",
 	"ADMIN_EXISTS":"Admin already exists.",
 	"USER_NOT_FOUND":"User not found.",
-	"LOGIN_SUCCESS":"Login successfully."
+	"LOGIN_SUCCESS":"Login successfully.",
+	"ALREADY_EXIST": "Already exist.",
+	"CREATE_SUCCESS": "Created successfully.",
+	"ACL_ADD_SUCCESS":"Acl added successfully."
 }
