@@ -94,16 +94,6 @@ module.exports = {
                 }
             }
         },
-        pre: [
-            {
-                method: userAuth.verifyToken,
-                assign: 'token'
-            },
-            {
-                method: userAuth.checkRoleAccess(["admin", "superadmin"]),
-                assign: 'checkRoleAccess'
-            }
-        ],
         validate: {
             payload: validator.login.payload,
             failAction: response.failAction

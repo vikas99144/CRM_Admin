@@ -14,21 +14,26 @@ exports.create = async (data, h) => {
 }
 
 exports.login = async (data, h) => {
-    data.token = createToken(data.id, data.role);
-    let model = Mongoose.models.admins,
-        query = { _id: data.id },
-        updateObj = { token: data.token },
-        populateQuery = [
-            {
-                path: "role",
-                select: "name slug"
-            }
-        ],
-        selection = "-updated_at -slug -created_at -token -pwd -is_deleted";
+    try {
+        data.token = createToken(data.id, data.role);
+        let model = Mongoose.models.admins,
+            query = { _id: data.id },
+            updateObj = { token: data.token },
+            populateQuery = [
+                {
+                    path: "role",
+                    select: "name slug"
+                }
+            ],
+            selection = "-updated_at -slug -created_at -token -pwd -is_deleted";
 
-    let user = await Operation.PATCH(model, query, updateObj, populateQuery, selection);
-    user.token = data.token;
-    return user;
+        let user = await Operation.PATCH(model, query, updateObj, populateQuery, selection);
+        user.token = data.token;
+        return user;
+    } catch (e) {
+        console.log(e);
+    }
+
 }
 
 exports.view = async (data) => {
