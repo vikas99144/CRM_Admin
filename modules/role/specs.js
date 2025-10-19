@@ -23,16 +23,16 @@ module.exports = {
                 }
             }
         },
-        pre: [
-            {
-                method: userAuth.verifyToken,
-                assign: 'token'
-            },
-            {
-                method: userAuth.checkRoleAccess(["admin", "superadmin"]),
-                assign: 'checkRoleAccess'
-            }
-        ],
+        // pre: [
+        //     {
+        //         method: userAuth.verifyToken,
+        //         assign: 'token'
+        //     },
+        //     {
+        //         method: userAuth.checkRoleAccess(["admin", "superadmin"]),
+        //         assign: 'checkRoleAccess'
+        //     }
+        // ],
         validate: {
             payload: validator.create.payload,
             failAction: response.failAction
@@ -176,9 +176,44 @@ module.exports = {
         }
     },
 
+    addAcl: {
+        description: 'Add acl',
+        notes: 'Add acl',
+        tags: ['Role', "api"],
+        plugins: {
+            'hapi-swagger': {
+                responses: {
+                    200: {
+                        description: 'Example of response model in return to success request',
+                        schema: validator.success
+                    },
+                    320: {
+                        description: 'Example of response model in return to failure request',
+                        schema: validator.failure
+                    }
+                }
+            }
+        },
+        pre: [
+            {
+                method: userAuth.verifyToken,
+                assign: 'token'
+            },
+            {
+                method: userAuth.checkRoleAccess(["admin", "superadmin"]),
+                assign: 'checkRoleAccess'
+            }
+        ],
+        validate: {
+            params: validator.addAcl.params,
+            payload: validator.addAcl.payload,
+            failAction: response.failAction
+        }
+    },
+
     update: {
-        description: 'Role status',
-        notes: 'Role status',
+        description: 'Role update',
+        notes: 'Role update',
         tags: ['Role', "api"],
         plugins: {
             'hapi-swagger': {

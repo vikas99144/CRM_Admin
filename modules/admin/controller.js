@@ -163,13 +163,3 @@ exports.update = async (data, h) => {
     return await Operation.PATCH(model, query, updateObj, populateQuery, selection);
 }
 
-
-exports.acl = async (data, h) => {
-    let model = Mongoose.models.admins,
-        query = { _id: ObjectId(data.admin_id) },
-        updateObj = { acl: data.acl},
-        populateQuery = [],
-        selection = "-updated_at -slug -created_at";
-    return await Operation.PATCH(model, query, updateObj, populateQuery, selection);
-}
-

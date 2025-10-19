@@ -15,6 +15,7 @@
 	"DELETE_SUCCESS": "Deleted successfully.",
 	"ROLE_CREATE_SUCCESS": "Role created successfully.",
 	"ROLE_EXISTS":"Role already exists.",
+	"ROLE_NOT_EXIST":"Role not exists.",
 	"ADMIN_CREATE_SUCCESS": "Admin created successfully.",
 	"ADMIN_EXISTS":"Admin already exists.",
 	"USER_NOT_FOUND":"User not found.",

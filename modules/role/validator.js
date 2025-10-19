@@ -48,6 +48,15 @@ module.exports = {
         })
     },
 
+    addAcl: {
+        params: Joi.object({
+            role_id: Joi.string().required().description('Role id is required')
+        }),
+        payload: Joi.object({
+            acls: Joi.array().min(1).items(Joi.string()).required().description("Acl is required")
+        })
+    },
+
     remove: {
         params: Joi.object({
             role_id: Joi.string().required().description('Role id is required')

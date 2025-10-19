@@ -4,13 +4,6 @@ const handler = require('./handler');
 const specs = require('./specs');
 
 module.exports = [
-
-    {
-        method: 'POST',
-        path: '/api/v1/admin/add-acl',
-        options: specs.acl,
-        handler: handler.acl
-    },
     {
         method: 'POST',
         path: '/api/v1/admin/create',

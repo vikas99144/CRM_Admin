@@ -27,10 +27,7 @@ const verifyToken = async (request, reply) => {
             console.log(err);
             return Response.failure(reply, "Error error errro");
         }
-        let role = await Mongoose.models.roles.findOne({ _id: ObjectId(user.role) }).select("name slug").exec();
-        console.log(role);
         request.user = user;
-        request.role = role;
         if (!user) {
             return Response.failure(reply, "Error in jwt");
         }
@@ -39,8 +36,9 @@ const verifyToken = async (request, reply) => {
 }
 
 exports.checkRoleAccess = (allowedRoles) => {
-    return (request, h) => {
-        const userRole = request.role?.slug;
+    return async (request, h) => {
+        let role = await Mongoose.models.roles.findOne({ _id: ObjectId(request.payload.role) }).select("name slug").exec();
+        const userRole = role.slug;
         if (!allowedRoles.includes(userRole)) {
             throw Boom.forbidden('Access denied');
         }

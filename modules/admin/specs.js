@@ -61,10 +61,10 @@ module.exports = {
             }
         },
         pre: [
-            {
-                method: userAuth.verifyToken,
-                assign: 'token'
-            },
+            // {
+            //     method: userAuth.verifyToken,
+            //     assign: 'token'
+            // },
             {
                 method: userAuth.checkRoleAccess(["superadmin"]),
                 assign: 'checkRoleAccess'

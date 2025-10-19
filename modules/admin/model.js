@@ -10,7 +10,6 @@ const adminSchema = new mongoose.Schema({
     country_code: { type: String, required: true },
     contact_number: { type: String, required: true },
     role: {type: mongoose.Schema.Types.ObjectId,ref: 'roles',required: true},
-    acls:[{type: mongoose.Schema.Types.ObjectId,ref: 'acls'}],
     token: { type: String, default: null },
     pwd: { type: String },
     is_active: { type: Boolean, default: true },

@@ -12,7 +12,7 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/api/v1/role/view/{id}',
+        path: '/api/v1/role/view/{role_id}',
         options: specs.view,
         handler: handler.view
     },
@@ -24,20 +24,26 @@ module.exports = [
     },
     {
         method: 'PATCH',
-        path: '/api/v1/role/status/{id}',
+        path: '/api/v1/role/status/{role_id}',
         options: specs.status,
         handler: handler.status
     },
        {
         method: 'PATCH',
-        path: '/api/v1/role/update/{id}',
+        path: '/api/v1/role/update/{role_id}',
         options: specs.update,
         handler: handler.update
     },
     {
         method: 'DELETE',
-        path: '/api/v1/role/delete/{id}',
+        path: '/api/v1/role/delete/{role_id}',
         options: specs.remove,
         handler: handler.remove
+    },
+        {
+        method: 'PATCH',
+        path: '/api/v1/role/add-acl/{role_id}',
+        options: specs.addAcl,
+        handler: handler.addAcl
     }
 ]

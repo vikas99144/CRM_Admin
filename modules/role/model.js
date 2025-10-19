@@ -6,7 +6,7 @@ const roleSchema = new mongoose.Schema({
     description: { type: String },
     permissions: [String],  // e.g. ['read', 'write', 'delete']
     is_deleted: { type: Boolean, default: false },
-    menues:[],
+    acls:[{type: mongoose.Schema.Types.ObjectId,ref: 'acls'}],
     status: { type: String, enum:["active","inactive"], default: "active" },
     created_by: { type: String },
     updated_by: { type: String }

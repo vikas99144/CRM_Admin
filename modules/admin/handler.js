@@ -9,23 +9,6 @@ const controller = require('./controller');
 const Response = require("../../response");
 
 
-const acl = async (request, h) => {
-    try {
-        let payload = request.payload;
-        let model = Mongoose.models.admins;
-        let query = { _id: Utils.ObjectId(payload.admin_id), is_deleted: false };
-        let isExist = await Operation.EXIST(model, query);
-        if (!isExist) {
-            return Response.validation(h, Lang.USER_NOT_FOUND);
-        }
-        const result = await controller.acl(payload, h);
-        return Response.success(h, Lang.ACL_ADD_SUCCESS, payload);
-    } catch (err) {
-        console.log(err)
-        return Response.internalServer(h, err.message);
-    }
-}
-
 const create = async (request, h) => {
     try {
         let payload = request.payload
@@ -124,7 +107,6 @@ const update = async (request, h) => {
 
 exports.view = view;
 exports.list = list;
-exports.acl = acl;
 exports.login = login;
 exports.create = create;
 exports.status = status;
