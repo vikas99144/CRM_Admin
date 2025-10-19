@@ -10,6 +10,7 @@ module.exports.configure = async (server) => {
       title: 'API Documentation',
       version: '/api/v1/',
     },
+    host: process.env.HOST,
     schemes: ['http', 'https'],
     securityDefinitions: {
       'jwt': {

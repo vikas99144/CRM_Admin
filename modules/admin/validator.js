@@ -34,7 +34,7 @@ module.exports = {
             email: Joi.string().required().email().description('Email is required'),
             pwd: Joi.string()
                 .required()
-                .description('Password is required')
+                .label('Password is required')
         })
     },
 
