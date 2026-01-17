@@ -1,62 +1,53 @@
-'use strict'
+'use strict';
 
-const dotenv = require('dotenv');
-dotenv.config();
-const hapi = require('@hapi/hapi');
-const serverConfig = require('./config/dev.json');
 const cluster = require('cluster');
-const numCPUs = require('os').cpus().length;
+const os = require('os');
+const http = require('http');
+const config = require('./config');
+const app = require('./app');
+const { connectDB } = require('./db/mongo');
 
+const PORT = config.port;
+const CPU_COUNT = os.cpus().length;
 
-let server;
+if (cluster.isPrimary) {
+  console.log(`Primary ${process.pid} is running`);
+  console.log(`Forking ${CPU_COUNT} workers...\n`);
 
-const configurations = async (server) => {
-  await require('./settings/prepare').configure()
-  await require('./db/db').configure()
-  await require('./settings/main').configure(server)
-  await require('./settings/swagger').configure(server)
-  await require('./settings/encryptDecrypt').configure(server)
-  init()
-}
-
-
-if (cluster.isMaster) {
-  console.log(`Master ${process.pid} is running`);
-  for (let i = 0; i < numCPUs; i++) {
+  for (let i = 0; i < CPU_COUNT; i++) {
     cluster.fork();
   }
 
   cluster.on('exit', (worker, code, signal) => {
-    console.log(`worker ${worker.process.pid} died`);
+    console.error(
+      `Worker ${worker.process.pid} died (${signal || code}). Restarting...`
+    );
+    cluster.fork();
   });
+
 } else {
-  server = new hapi.server({
-    port: serverConfig.webServer.port,
-    host: serverConfig.host,
-    routes: {
-      cors: {
-        origin: ['*'],
-        additionalHeaders: ['x-access-token'],
-        additionalExposedHeaders: ['x-access-token']
+
+  (async () => {
+    await connectDB();
+
+    const server = http.createServer(app);
+
+    server.listen(PORT, (err) => {
+      if (!err) {
+        console.log(
+          `Worker ${process.pid} listening on port ${PORT}`
+        );
       }
-    }
-  })
+    });
 
-  configurations(server)
+    const shutdown = () => {
+      console.log(`Worker ${process.pid} shutting down...`);
+      server.close(() => {
+        process.exit(0);
+      });
+    };
+
+    process.on('SIGTERM', shutdown);
+    process.on('SIGINT', shutdown);
+  })();
 }
-
-const init = async () => {
-  await server.start()
-}
-
-process.on('unhandledRejection', (err) => {
-  console.log(err)
-  process.exit(1)
-})
-
-
-
-
-
-
-
